@@ -1,4 +1,4 @@
 module.exports= {
-    User: require('./users'),
-    Elevator: require('./elevator')
-}
+  User: require('./users'),
+  Elevator: require('./elevator'),
+};

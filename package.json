@@ -4,18 +4,38 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "app-start": "nodemon server.js"
+    "test": "dotenv -e .env.test mocha --exit --",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "lint": "npx eslint . --cache --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.4",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^8.0.0"
+    "mongodb-memory-server": "^8.3.0",
+    "mongoose": "^8.0.0",
+    "nodemon": "^2.0.15",
+    "safe-json-stringify": "^1.2.0",
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
+    "dotenv-cli": "^5.0.0",
+    "eslint": "^8.52.0",
+    "eslint-config-google": "^0.14.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^15.0.2",
+    "mocha": "^9.2.1",
+    "sinon": "^13.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint"
+    }
   }
 }
