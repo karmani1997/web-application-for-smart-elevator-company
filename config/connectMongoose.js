@@ -10,7 +10,8 @@ const getMongooseConfig = () => {
   if (testMode) {
     return {
       ...config,
-      keepAlive: true,
+      maxPoolSize: 50,
+      wtimeoutMS: 2500,
       serverSelectionTimeoutMS: 100000,
     };
   } else {

@@ -19,6 +19,8 @@ app.use('/elevators', elevatorRouter);
 
 // app.use(errorHandler);
 
+
+require('./seed/seed');
 module.exports = {
   app,
 };

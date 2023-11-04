@@ -17,7 +17,7 @@ mongoose.connection.on('error', (err) => {
 
 // When successfully connected
 mongoose.connection.on('connected', () => {
-  console.log(`Mongoose default connection open to ${process.env.MONGO_URI}`);
+  console.log(`Mongoose default connection open to ${process.env.MONGO_URL}`);
 });
 
 // When the connection is disconnected
