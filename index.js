@@ -1,6 +1,12 @@
 const {app}= require('./app');
 const safeJsonStringify = require('safe-json-stringify');
 
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const yaml = require('js-yaml');
+const fs = require('fs');
+
+
 
 const fatalErrorJsonify = (err) => safeJsonStringify({
   timestamp: new Date(),
@@ -9,9 +15,25 @@ const fatalErrorJsonify = (err) => safeJsonStringify({
   stack: err.stack,
 });
 
-console.log('Starting server');
+
+
+// Load and parse the Swagger YAML file
+const swaggerDocument = yaml.load(fs.readFileSync('swagger.yaml', 'utf8'));
+
+// Set up Swagger documentation
+const options = {
+  swaggerDefinition: swaggerDocument,
+  apis: ['./api/routes/*.js'], // Specify the path to your API routes
+};
+
+const specs = swaggerJsdoc(options);
+
+// Serve the Swagger UI on a specific route
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(specs));
+
 
 // start express server
+console.log('Starting server');
 const server = app.listen(app.get('port'), ()=>{
   console.log('Server started', {
     port: app.get('port'),
@@ -39,5 +61,3 @@ process.on('uncaughtException', function(err) {
   process.exit(99);
 });
 
-
-module.exports = {server};
