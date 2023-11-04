@@ -10,7 +10,7 @@ const skyward = require('./skyward-peaks.json');
 async function seedData() {
   try {
     console.log('data seeding to be started');
-    const tobeSeededData = industires.concat(skyward)
+    const tobeSeededData = industires.concat(skyward);
     tobeSeededData.forEach(async (item)=> {
       const chart = await ChartDAL.insert(item.chart);
       await ElevatorDAL.insert({

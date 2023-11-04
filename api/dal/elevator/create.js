@@ -1,12 +1,12 @@
 const {Elevator} = require('../models');
 
 /**
- * 
- * @param {object | Array} data 
- * @returns 
+ * @param {object | Array} data
+ * @returns
  */
-const insert = async (data) => await Elevator.create(data)
+
+const insert = async (data) => await Elevator.create(data);
 
 module.exports = {
-  insert
+  insert,
 };

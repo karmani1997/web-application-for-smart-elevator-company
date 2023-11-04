@@ -18,10 +18,10 @@ const createElevator = async (data) => await ElevatorDAL.insert(data);
  * Create new elevators
  * @param {Array} elevatorsList
  */
-const createElevators = async (elevatorsList) =>  await ElevatorDAL.insert(elevatorsList);
+const createElevators = async (elevatorsList) => await ElevatorDAL.insert(elevatorsList);
 
 module.exports = {
   cleanUpDatabase,
   createElevator,
-  createElevators
+  createElevators,
 };
