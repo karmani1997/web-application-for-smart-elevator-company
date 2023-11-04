@@ -1,5 +1,5 @@
 const {request} = require('./utils/app');
-const {cleanUpDatabase, createElevator} = require('../utils/db');
+const {cleanUpDatabase, createElevator, createElevators} = require('../utils/db');
 const {expect} = require('./utils/chai');
 
 describe('Test elevator endpoints', async () => {
@@ -23,44 +23,93 @@ describe('Test elevator endpoints', async () => {
 
 
 it('Should return 200 and elevator count', async () => {
-    // Assuming you have a function to seed data in your database
-    // Here, I'm using a mock function for the sake of the example
-    // You should adjust this to your actual data setup
-    const seedData = async () => {
-      // Insert some elevator data into the database
-      // This function should populate the database with test data
-    };
-    await seedData();
-  
+
+    const data = [
+    {
+        "fabricationNumber": "FAB139",
+        "address": "Mannheim, Germany",
+        "floorNumber": 2,
+        "deviceIdentificationNumber": "DIN472",
+        "manufacturerName": "Schindler",
+        "productionYear": 2029,
+        "elevatorType": "Freight",
+        "state": "warning",
+        "warningMessage": "Noise detected during operation"
+      },
+      {
+        "fabricationNumber": "FAB141",
+        "address": "Karlsruhe, Germany",
+        "floorNumber": 7,
+        "deviceIdentificationNumber": "DIN473",
+        "manufacturerName": "KONE",
+        "productionYear": 2030,
+        "elevatorType": "Passenger",
+        "state": "out-of-order",
+        "reason": "Overheating detected"
+      },
+      {
+        "fabricationNumber": "FAB141",
+        "address": "Karlsruhe, Germany",
+        "floorNumber": 7,
+        "deviceIdentificationNumber": "DIN473",
+        "manufacturerName": "KONE",
+        "productionYear": 2030,
+        "elevatorType": "Passenger",
+        "state": "out-of-order",
+        "reason": "Overheating detected"
+      },
+      {
+        "fabricationNumber": "FAB141",
+        "address": "Karlsruhe, Germany",
+        "floorNumber": 7,
+        "deviceIdentificationNumber": "DIN473",
+        "manufacturerName": "KONE",
+        "productionYear": 2030,
+        "elevatorType": "Passenger",
+        "state": "out-of-order",
+        "reason": "Overheating detected"
+      },
+      {
+        "fabricationNumber": "FAB142",
+        "address": "Karlsruhe, Germany",
+        "floorNumber": 7,
+        "deviceIdentificationNumber": "DIN473",
+        "manufacturerName": "KONE",
+        "productionYear": 2030,
+        "elevatorType": "Passenger",
+        "state": "operational",
+        "reason": "Overheating detected"
+      },
+      {
+        "fabricationNumber": "FAB142",
+        "address": "Karlsruhe, Germany",
+        "floorNumber": 7,
+        "deviceIdentificationNumber": "DIN473",
+        "manufacturerName": "KONE",
+        "productionYear": 2030,
+        "elevatorType": "Passenger",
+        "state": "operational",
+        "reason": "Overheating detected"
+      }
+    ]
+    await createElevators(data);
     const response = await request.get('/elevators/count');
     console.log('response', JSON.stringify(response.body));
     
     expect(response).to.have.status(200);
-    //expect(response.body).to.have.property('count');
-    
+    expect(response.body).to.have.lengthOf(3);
+    response.body.forEach((item)=> {
+        if(item.state==="warning"){
+            expect(item.count).to.equal(1);
+        }
+
+        if(item.state==="out-of-order"){
+            expect(item.count).to.equal(3);
+        }
+
+        if(item.state==="operational"){
+            expect(item.count).to.equal(2);
+        }
+    });
   });
-
-  
-
-  it('Should return 200 and elevators by state', async () => {
-    // Assuming you have a function to seed data in your database
-    // Here, I'm using a mock function for the sake of the example
-    // You should adjust this to your actual data setup
-    const seedData = async () => {
-      // Insert some elevator data into the database with various states
-      // This function should populate the database with test data
-    };
-    await seedData();
-  
-    const state = 'operational'; // Replace with the state you want to test
-    const response = await request.get(`/elevators-list/${state}`);
-    console.log('response', JSON.stringify(response.body));
-  
-    expect(response).to.have.status(200);
-    //expect(response.body).to.be.an('array');
-
-  });
-  
-
-
 });

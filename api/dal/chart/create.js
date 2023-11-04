@@ -1,10 +1,7 @@
 const {Chart} = require('../models');
 
-const createChart = async (data) => {
-  const chart = new Chart(data);
-  return chart.save();
-};
+const insert = async (item) => await Chart.create(item);
 
 module.exports = {
-  createChart,
+  insert,
 };

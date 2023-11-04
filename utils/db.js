@@ -12,12 +12,16 @@ const cleanUpDatabase = async () => Promise.all(Object.values(mongoose.connectio
  * Create new elevator
  * @param {object} data
  */
-const createElevator = async (data) => {
-  const elevator = await ElevatorDAL.createElevator(data);
-  return elevator.save();
-};
+const createElevator = async (data) => await ElevatorDAL.insert(data);
+
+/**
+ * Create new elevators
+ * @param {Array} elevatorsList
+ */
+const createElevators = async (elevatorsList) =>  await ElevatorDAL.insert(elevatorsList);
 
 module.exports = {
   cleanUpDatabase,
   createElevator,
+  createElevators
 };

@@ -1,5 +1,4 @@
 const {ElevatorDAL, ChartDAL} = require('../api/dal');
-const Chart = require('../api/dal/models');
 
 // import json files
 const industires = require('./elevate-industires.json');
@@ -13,8 +12,8 @@ async function seedData() {
     console.log('data seeding to be started');
     const tobeSeededData = industires.concat(skyward)
     tobeSeededData.forEach(async (item)=> {
-      const chart = await ChartDAL.createChart(item.chart);
-      await ElevatorDAL.createElevator({
+      const chart = await ChartDAL.insert(item.chart);
+      await ElevatorDAL.insert({
         ...item,
         chart: chart,
       });
