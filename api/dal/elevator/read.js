@@ -2,9 +2,7 @@ const {Elevator} = require('../models');
 
 const getElevators = async () => await Elevator.find({}).populate('chart');
 
-const getElevatorByFabricationNumber = async (id) => {
-  await Elevator.findOne({'fabricationNumber': id});
-};
+const getElevatorByFabricationNumber = async (id) => await Elevator.findOne({'fabricationNumber': id}).populate('chart');
 
 const getAllElevatorsCount = async () => {
   return await Elevator.aggregate([
@@ -25,7 +23,7 @@ const getAllElevatorsCount = async () => {
 };
 
 
-const getAllElevatorsByState = async (state) => await Elevator.find({'state': state});
+const getAllElevatorsByState = async (state) => await Elevator.find({'state': state}).populate('chart');
 
 const getElevatorsRecentlyVisited = async (state) => {
   return await Elevator.aggregate([
