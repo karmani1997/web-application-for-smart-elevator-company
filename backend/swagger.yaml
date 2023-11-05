@@ -8,6 +8,11 @@ paths:
   /elevators:
     get:
       summary: Get a list of elevators
+      parameters:
+        - in: query
+          name: state
+          type: strig
+          description: Get a list of elevators by state (e.g., warning, out-of-order, operational)
       responses:
         '200':
           description: Successful response
@@ -18,21 +23,6 @@ paths:
       responses:
         '200':
           description: Successful response
-
-  /elevators/elevators-list/{state}:
-    parameters:
-      - name: state
-        in: path
-        required: true
-        schema:
-          type: string
-        description: Elevator state (e.g., warning, out-of-order, operational)
-    get:
-      summary: Get a list of elevators by state (e.g., warning, out-of-order, operational)
-      responses:
-        '200':
-          description: Successful response
-
 
   /elevators/{id}:
     parameters:

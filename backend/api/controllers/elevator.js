@@ -3,7 +3,13 @@ const {ElevatorDAL} = require('../dal');
 
 const getElevators = async (req, res) => {
   try {
-    const elevators = await ElevatorDAL.getElevators();
+    const state = req.query.state;
+    let elevators = [];
+    if (!state) {
+      elevators = await ElevatorDAL.getElevators();
+    } else {
+      elevators = await ElevatorDAL.getAllElevatorsByState(state);
+    }
     res.status(200).json(elevators);
   } catch (error) {
     res.status(500);
@@ -41,21 +47,9 @@ const getElevatorsRecentlyVisited = async (req, res) => {
   }
 };
 
-const getAllElevatorsByState = async (req, res) => {
-  try {
-    const {state} = req.params;
-    const elevators = await ElevatorDAL.getAllElevatorsByState(state);
-    res.status(200).json(elevators);
-  } catch (error) {
-    res.status(500);
-  }
-};
-
-
 module.exports = {
   getElevators,
   getElevatorById,
   getAllElevatorsCount,
-  getElevatorsRecentlyVisited,
-  getAllElevatorsByState,
+  getElevatorsRecentlyVisited
 };
