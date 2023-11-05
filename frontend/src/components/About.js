@@ -7,7 +7,8 @@ const About = () => (
     <h1 className="mb-5">Elevator Dashboard</h1>
 
     <p className="lead">
-      Welcome to the Elevator Dashboard, a web application that provides real-time information and analytics for your building's elevators.
+      Welcome to the Elevator Dashboard! <br/>
+      Please login to view the dashboard information.
     </p>
   </div>
 );
