@@ -14,7 +14,7 @@ app.use(express.json());
 
 const {elevatorRouter} = require('./api/routes');
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: '*' }));
 
 
 //health endpoint
