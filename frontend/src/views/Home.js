@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 
-import Hero from "../components/Hero";
+import About from "../components/About";
 import Content from "../components/Content";
 
 const Home = () => (
   <Fragment>
-    <Hero />
+    <About />
     <hr />
     <Content />
   </Fragment>

@@ -13,7 +13,6 @@ const Dashboard = () => {
     fetch(apiUrl)
       .then((response) => response.json())
       .then((result) => {
-        // Update the state with the fetched data and set loading to false
         setData(result);
         setIsLoading(false);
       })
