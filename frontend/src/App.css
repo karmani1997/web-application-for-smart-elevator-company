@@ -33,3 +33,31 @@
 .result-block-container .result-block {
   opacity: 1;
 }
+
+/* Elevator table css */
+.elevator-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 2px solid #ccc;
+  font-size: 16px;
+}
+
+.elevator-table th {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.elevator-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.elevator-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.elevator-table tr:hover {
+  background-color: #ddd;
+}

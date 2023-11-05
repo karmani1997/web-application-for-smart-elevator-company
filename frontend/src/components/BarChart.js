@@ -14,11 +14,10 @@ const transformDataForBarChart = (data) => {
         labels: labels,
         datasets: [
         {
-            label: 'Counts by State',
+            label: '',
             backgroundColor: [colors[labels[0]],colors[labels[1]],colors[labels[2]]],
             data: counts,
-        },
-        ],
+        }],
     };
 };
 

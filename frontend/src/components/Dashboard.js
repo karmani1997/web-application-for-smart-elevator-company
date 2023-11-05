@@ -1,42 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import BarChart from './BarChart';
 import { getConfig } from '../config';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-
-// const Dashboard = () => {
-//   const [data, setData] = useState([]);
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-//     const config = getConfig();
-//     const apiUrl = config.apiUrl+'/count';
-
-//     fetch(apiUrl)
-//       .then((response) => response.json())
-//       .then((result) => {
-//         setData(result);
-//         setIsLoading(false);
-//       })
-//       .catch((error) => {
-//         console.error('Error fetching data:', error);
-//         setIsLoading(false);
-//       });
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>Dashboard</h1>
-//       {isLoading ? (
-//         <p>Loading...</p>
-//       ) : (
-//         <BarChart data={data} />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
+import { Link, Switch } from 'react-router-dom';
+import ElevatorTable from './ElevatorTable';
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -44,7 +10,6 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [elevatorState, setElevatorState] = useState(null);
   const [elevatorList, setElevatorList] = useState([]);
-  const [recentlyVisitedElevators, setRecentlyVisitedElevators] = useState([]);
 
   useEffect(() => {
     const config = getConfig();
@@ -65,34 +30,55 @@ const Dashboard = () => {
         console.error('Error fetching data:', error);
         setIsLoading(false);
       });
+
+      //fetch elevators
+      fetchElevators();
+      
   }, []);
 
-  const handleCountClick = (state) => {
+  const handleCountClick = async (state) => {
     setElevatorState(state);
-    const elevatorListForState = fetchElevatorListByState(state);
+    const elevatorListForState = await fetchElevators(state);
     setElevatorList(elevatorListForState);
   };
 
   const handleElevatorClick = (elevatorId) => {
-    // Handle click on a specific elevator to display its details
-    // Replace with your logic to fetch elevator details
-    // For example, make an API call to retrieve the details
+    //TODO: need to add more logic here for single elevator detail
     const elevatorDetails = fetchElevatorDetails(elevatorId);
-
-    // Update the recently visited elevators list
-    setRecentlyVisitedElevators((prevList) => [elevatorDetails, ...prevList]);
   };
 
-  const fetchElevatorListByState = (state) => {
-    // Replace this with your data fetching logic to get the list of elevators by state
-    // Example: Make an API call to fetch elevators by state
-    // Return the list of elevators for the specified state
+  const fetchElevators = async (state) => {
+    try {
+      const config = getConfig();
+      const apiUrl = !state ? `${config.apiUrl}` : `${config.apiUrl}?state=${state}`;
+      console.log({apiUrl,state})
+      const response = await fetch(apiUrl);
+      console.log({response})
+      if (!response.ok) {
+        throw new Error('Failed to fetch elevator list');
+      }
+      const data = await response.json();
+      console.log({data})
+      setElevatorList(data);
+    } catch (error) {
+      console.error('Error fetching elevator list:', error);
+    }
   };
 
-  const fetchElevatorDetails = (elevatorId) => {
-    // Replace this with your data fetching logic to get elevator details by ID
-    // Example: Make an API call to fetch elevator details
-    // Return the details of the specified elevator
+  const fetchElevatorDetails = async (elevatorId) => {
+    try {
+      const config = getConfig();
+      const apiUrl = `${config.apiUrl}/elevators/${elevatorId}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Failed to fetch elevator details');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching elevator details:', error);
+      return {};
+    }
   };
 
   return (
@@ -109,40 +95,20 @@ const Dashboard = () => {
             <div>Out of Service:  <Link onClick={() => handleCountClick('outOfService')}>{operationalCounts['out-of-order']}</Link></div>
             <br/>
             <BarChart data={data} />
+
+            <br/>
+            <hr/>
+
+            {elevatorState ? (
+              <ElevatorTable elevators={elevatorList} state={elevatorState} />
+              ) : (
+                <ElevatorTable elevators={elevatorList} />
+              )
+            }
+           
           </div>
         )}
       </div>
-      <br/>
-      <hr/>
-      <div>
-        <h2>Recently Visited Elevators</h2>
-        <ul>
-          {recentlyVisitedElevators.map((elevator) => (
-            <li
-              key={elevator.id}
-              onClick={() => handleElevatorClick(elevator.id)}
-            >
-              {elevator.name}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {elevatorState && (
-        <div>
-          <h2>Elevators in {elevatorState} State</h2>
-          <ul>
-            {elevatorList.map((elevator) => (
-              <li
-                key={elevator.id}
-                onClick={() => handleElevatorClick(elevator.id)}
-              >
-                {elevator.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };
