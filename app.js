@@ -8,18 +8,13 @@ require('./config/mongoose');
 
 app.use(compression());
 app.use(express.json());
-// app.use(requestLoggingMiddleware);
-// app.use(responseLoggingMiddleware);
 
 const {elevatorRouter} = require('./api/routes');
 
+//health endpoint
+app.get('/',(req,res)=> res.send({'status':'healthy'}));
+//other routes
 app.use('/elevators', elevatorRouter);
-// app.use('/users',userRouter);
-// app.use('/students',studentRouter);
-
-// app.use(errorHandler);
-
-
 require('./seed/seed');
 module.exports = {
   app,
