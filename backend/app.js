@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const compression = require('compression');
 const app = express();
+const cors = require('cors'); 
+
+
 app.set('port', process.env.PORT || 3000);
 
 require('./config/mongoose');
@@ -10,6 +13,9 @@ app.use(compression());
 app.use(express.json());
 
 const {elevatorRouter} = require('./api/routes');
+
+app.use(cors({ origin: 'http://localhost:3000' }));
+
 
 //health endpoint
 app.get('/',(req,res)=> res.send({'status':'healthy'}));
