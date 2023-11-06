@@ -23,10 +23,10 @@ This repository contains the code for a Elevator Dashboard. The system consists 
 Additionally, you can signup with your correct email and test more by verifying the email.
 
 ## Frontend
-Please refer frontend readme for details as to how to run the application locally.
+Please refer [Frontend README](https://github.com/karmani1997/web-application-for-smart-elevator-company/blob/main/frontend/README.md) for details as to how to run the application locally.
 
 ## Backend
-Please refer frontend readme for details as to how to run the application locally.
+Please refer [Backend README](https://github.com/karmani1997/web-application-for-smart-elevator-company/blob/main/backend/README.md) for details as to how to run the application locally.
 
 ## Improvements
 1. Recently visited elevators could have been implemented given more time. BE could have tracked visits via `elevators/{id}` endpoint and generated this information.
