@@ -6,7 +6,7 @@ This repository contains the code for a Elevator Dashboard. The system consists 
 
 ## Live Working Solutions
 1. Backend - [API Documentation](https://api-for-smart-elevator-company.onrender.com/swagger)
-2. Frontend - [React App](https://web-application-for-smart-elevator-company-ns4pcgi2r.vercel.app/)
+2. Frontend - [React App](https://web-application-for-smart-elevator-company.vercel.app/)
 
 ## Sample User Accounts
 1. User 1
@@ -32,3 +32,4 @@ Please refer frontend readme for details as to how to run the application locall
 1. Recently visited elevators could have been implemented given more time. BE could have tracked visits via `elevators/{id}` endpoint and generated this information.
 2. Current FE solution is a single page ReactJs application with Auth0. BE could have been interegrated to take responsibility of token and everything but given the time focus was on BE functionality and FE display. ReactJs application manages auth0 login/signup.
 3. Current FE solution can be improved to follow better practices by segrating data functions into utilities and more.
+4. Integrate Amazon CDK configuration
